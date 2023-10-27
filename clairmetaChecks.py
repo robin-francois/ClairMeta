@@ -8,7 +8,21 @@ from clairmeta.settings import DCP_CHECK_SETTINGS
 
 all_checks = {}
 
+print("""---
+documentclass: book
+papersize: a4
+geometry: margin=1.0in
+indent: true
+fontfamily: helvet
+header-includes:
+  - \\renewcommand{\\familydefault}{\\sfdefault}
+...
+""")
+
+print("# ClairMeta v1.5.0 list of checks")
+
 prefix = DCP_CHECK_SETTINGS['module_prefix']
+moduleNumber = 1
 for k, v in DCP_CHECK_SETTINGS['modules'].items():
     try:
         module_path = 'clairmeta.' + prefix + k
@@ -19,14 +33,22 @@ for k, v in DCP_CHECK_SETTINGS['modules'].items():
 
         all_checks[module.__name__] = checks
 
+        functionNumber = 1
+    
+        print("## "+str(moduleNumber)+" "+k)
+
         for f in funcs:
             name = f[0]
-            doc = f[1].__doc__
-            pretty_name = list(filter(None, doc.split('\n')))[0].strip()
-            print(",".join(['"'+pretty_name+'"',name,'"'+f[1].__doc__.replace('"',"'")+'"']))
+            doc = f[1].__doc__    
+           
+            print("### "+str(moduleNumber)+"."+str(functionNumber)+" "+name)
+            print("```")
+            print(doc)
+            print("```")
+            print("")
+            functionNumber += 1
+        moduleNumber += 1
+        print("\n---\n")
 
     except Exception as e:
         print(str(e))
-
-with open('result.json', 'w') as fp:
-    json.dump(all_checks, fp)
