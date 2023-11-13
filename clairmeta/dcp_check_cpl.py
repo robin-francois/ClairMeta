@@ -201,11 +201,11 @@ class Checker(CheckerBase):
 
         doc_keys = {
             "Encrypted": """
-Encryption should be coherent across all reeels.
+            Encryption should be coherent across all reeels.
 
-This is not required explicitly in the standards but is known to
-cause issue for some equipements in the field.
-"""
+            This is not required explicitly in the standards but is known to
+            cause issue for some equipements in the field.
+            """
         }
 
         cpl = playlist["Info"]["CompositionPlaylist"]
